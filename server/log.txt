@@ -1,1 +1,5 @@
 {"username":"Admin","text":"Welcome to our chatterbox!","roomname":"Homeroom"}
+{"username":"test","text":"hello","roomname":"Homeroom"}
+{"username":"test","text":"hi","roomname":"Homeroom"}
+{"username":"test","text":"how are you","roomname":"Homeroom"}
+{"username":"test","text":"weeeeee","roomname":"Homeroom"}
