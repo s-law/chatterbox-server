@@ -1,8 +1,24 @@
 var url = require('url');
 var fs = require('fs');
+var path = require('path');
 
 var dataStore = {
   results: []
+}
+
+var logPath = path.join(__dirname, './log.txt')
+
+if (dataStore.results.length === 0) {
+  fs.readFile(logPath, function(err, data) {
+    if (err) {
+      throw err;
+    }
+    var dataToBeLoaded = data.toString().split('\n');
+    for (var i = 0; i < dataToBeLoaded.length; i++) {
+      dataToBeLoaded[i] = JSON.parse(dataToBeLoaded[i]);
+    }
+    dataStore.results = dataToBeLoaded;
+  })
 }
 
 var requestHandler = function(request, response) {
@@ -36,6 +52,10 @@ var requestHandler = function(request, response) {
 
       request.on('end', function() {
         dataStore.results.push(JSON.parse(dataHolder));
+
+        // NOTE: 
+        fs.appendFile(logPath, '\n' + dataHolder, function (err) {});
+
         response.writeHead(201, headers);
         response.end();
       });
