@@ -8,18 +8,16 @@ var dataStore = {
 
 var logPath = path.join(__dirname, './log.txt')
 
-if (dataStore.results.length === 0) {
-  fs.readFile(logPath, function(err, data) {
-    if (err) {
-      throw err;
-    }
-    var dataToBeLoaded = data.toString().split('\n');
-    for (var i = 0; i < dataToBeLoaded.length; i++) {
-      dataToBeLoaded[i] = JSON.parse(dataToBeLoaded[i]);
-    }
-    dataStore.results = dataToBeLoaded;
-  })
-}
+fs.readFile(logPath, function(err, data) {
+  if (err) {
+    throw err;
+  }
+  var dataToBeLoaded = data.toString().split('\n');
+  for (var i = 0; i < dataToBeLoaded.length; i++) {
+    dataToBeLoaded[i] = JSON.parse(dataToBeLoaded[i]);
+  }
+  dataStore.results = dataToBeLoaded;
+})
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module. They include information about
@@ -53,7 +51,8 @@ var requestHandler = function(request, response) {
       request.on('end', function() {
         dataStore.results.push(JSON.parse(dataHolder));
 
-        // NOTE: 
+        // NOTE: writes are being APPENDED. each write is
+        // the previously stringified message obj
         fs.appendFile(logPath, '\n' + dataHolder, function (err) {});
 
         response.writeHead(201, headers);
