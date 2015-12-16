@@ -23,11 +23,11 @@ fs.readFile(logPath, function(err, data) {
 
 app.use(express.static(__dirname + '/client'));
 
-app.get('/classes/messages', function (req, res) {
+app.route('/classes/messages')
+.get(function(req, res) {
   res.send(JSON.stringify(dataStore));
-});
-
-app.post('/classes/messages', function (req, res) {
+})
+.post(function(req, res) {
   var dataHolder = '';
   req.on('data', function(data) {
     dataHolder += data;
