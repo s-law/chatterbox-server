@@ -1,5 +1,5 @@
 var http = require("http");
-var handleRequest = require('./request-handler.js')
+var handleRequest = require('./request-handler.js');
 
 
 // Every server needs to listen on a port with a unique number. The
