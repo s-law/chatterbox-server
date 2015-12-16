@@ -1,12 +1,13 @@
 var url = require('url');
 var fs = require('fs');
 var path = require('path');
+var stream = require('stream');
 
 var dataStore = {
   results: []
-}
+};
 
-var logPath = path.join(__dirname, './log.txt')
+var logPath = path.join(__dirname, './log.txt');
 
 fs.readFile(logPath, function(err, data) {
   if (err) {
@@ -17,7 +18,7 @@ fs.readFile(logPath, function(err, data) {
     dataToBeLoaded[i] = JSON.parse(dataToBeLoaded[i]);
   }
   dataStore.results = dataToBeLoaded;
-})
+});
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module. They include information about
@@ -33,7 +34,7 @@ var requestHandler = function(request, response) {
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
   var parsed = url.parse(request.url, true);
-  var route = parsed.pathname
+  var route = parsed.pathname;
 
   if (route === '/classes/messages' || route === '/classes/room1') {
     if (request.method === 'OPTIONS') {
